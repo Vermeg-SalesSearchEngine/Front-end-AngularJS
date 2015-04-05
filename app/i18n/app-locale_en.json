@@ -1,0 +1,27 @@
+{
+    "SEARCH_LABEL" : "Searching an RFP",
+    "SEARCH_PLACEHOLDER" : "Enter your query",
+    "SEARCH_BUTTON" : "Search",
+    "SEARCH_RESULTS" : "result(s)",
+    "SEARCH_MS" : "milliseconds",
+    "SEARCH_PREVIOUS" : "Previous",
+    "SEARCH_NEXT" : "Next",
+
+    "SEARCH_PAGE_DISPLAY" : "Display",
+    "SEARCH_PAGE_RESULT" : "results per page",
+
+    "ALBUM_FROM" : "from",
+    "ALBUM_RELEASE": "release in",
+    "ALBUM_KIND": "Kind",
+
+    "FILTER_TITLE" : "Filters",
+    "FILTER_RATING" : "Rating",
+    "FILTER_AUTHOR" : "Auteur",
+    "FILTER_RELEASE_DATE" : "Release Date",
+    "FILTER_RELEASE_DATE_BEFORE" : "Before",
+    "FILTER_RELEASE_DATE_SINCE" : "Since",
+    "FILTER_RELEASE_DATE_YEAR" : "Years",
+
+   
+
+}

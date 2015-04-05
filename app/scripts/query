@@ -1,0 +1,60 @@
+{
+    "from": 0,
+    "size": 10,
+    "fields": [
+        "filename"
+    ],
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "nested": {
+                        "path": "couple",
+                        "query": {
+                            "bool": {
+                                "must": [
+                                    {
+                                        "fuzzy_like_this": {
+                                            "fields": [
+                                                "couple.question",
+                                                "couple.response"
+                                            ],
+                                            "like_text": "faire",
+                                            "min_similarity": 0.7,
+                                            "prefix_length": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inner_hits": {    "highlight": {
+
+"fields": {
+
+"couple.response" : {}
+
+}
+
+}}
+                    }
+                }
+            ]
+        }
+    },
+    "facets": {
+        "artist_type": {
+            "terms": {
+                "field": "author"
+            }
+        }
+    },
+    "highlight": {
+
+"fields": {
+
+"couple" : {}
+
+}
+
+}
+}

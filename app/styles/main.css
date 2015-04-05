@@ -1,0 +1,198 @@
+/* Space out content a bit */
+body {
+  padding-top: 0px;
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+  .logo{
+    widht:100px;
+    height:100px;
+  }
+  .menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+/* Album rating */
+.star-rating {
+    position: relative;
+    display: block;
+    width: 125px;
+    height: 25px;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-position: 0 0
+}
+
+.star-rating li {
+    display: inline
+}
+
+.star-rating a, .star-rating .current-user-rating, .star-rating .current-rating {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-indent: -1000em;
+    height: 25px;
+    line-height: 25px;
+    outline: none;
+    overflow: hidden;
+    border: none
+}
+
+.star-rating .current-rating {
+    z-index: 1;
+    background-position: 0 -75px
+}
+
+.inline-rating {
+    display: -moz-inline-block;
+    display: -moz-inline-box;
+    display: inline-block
+}
+
+.small-star {
+    width: 50px;
+    height: 10px
+}
+
+.small-star, .small-star a:hover, .small-star a:active, .small-star a:focus, .small-star .current-user-rating, .small-star .current-rating {
+    background-image: url('../img/rating_star_small.gif');
+    line-height: 10px;
+    height: 10px
+}
+
+.small-star .current-rating {
+    background-position: 0 -30px
+}
+
+/* Override Pagination CSS */
+.pagination {
+    margin: 10px 0;
+}
+
+.middle-col {
+    vertical-align: middle;
+}
+.middle-col-support {
+    display: table-cell;
+    float: none;
+}
+}

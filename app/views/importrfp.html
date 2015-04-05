@@ -1,0 +1,61 @@
+
+<div ng-show="showz"><div class="panel panel-info"> <div class="panel-heading">
+  <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tips</h3>
+</div>
+<div class="panel-body">
+  <ul>
+    <li>Select an xlsx file to upload</li>
+    <li>Edit with our online Excel like Editor</li>
+    <li>Click on question's column header</li>
+    <li>Click on response's column header</li>
+    <li>Add Tags</li>
+  </ul>
+</div></div>
+
+<h3><span class="label label-primary">Author:</span></h3>
+<input type="text" class="form-control" ng-model="author">
+<br>
+<br>
+<center><input class="btn "  type='file' accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ng-model='filebase' file-model='myFile' base-sixty-four-input ></center>
+<center>
+  <button ng-click="getSheet()" class="btn btn-primary"><span class="glyphicon glyphicon-open" aria-hidden="true"></span> Upload</button></center>
+</di>
+<br>
+</div>
+<div class='form-group'>
+  <label for='sheet_name'>Sheet Name</label> 
+  <select ng-model="myselect" id="sheet_name" class="form-control" ng-change="uploadFile()" required="true" ng-required="true"  ng-options="o as o for o in options"><option value="">---- Select a sheet ----</option>
+  </select>
+</div>
+<br>
+<span us-spinner="{radius:30, width:40, length: 70}" spinner-key="spinner-1"></span>
+</form>
+<h3><span class="label label-primary">Questions/Responses:</span></h3>
+<hot-table
+settings="{  minSpareRows: 1,
+colHeaders: true,
+contextMenu: true,minSpareCols: 1,
+minSpareRows: 1,
+contextMenu: true,
+outsideClickDeselects: false,
+removeRowPlugin: true,cells:cells,afterSelectionEnd:onSelection,
+manualColumnResize: true ,manualRowResize: true
+}"
+selectedIndex:"sheetSelect"
+datarows="sheet"
+height="500"
+width="1200"
+
+>
+
+
+
+</hot-table>
+<div ng-show="showz">
+  <h3><span class="label label-primary">Tags:</span></h3>
+  <tags-input ng-model="tags">
+  <auto-complete source="loadTags($query)"></auto-complete>
+</tags-input>
+<br>
+</div>
+<center> <div class="btn btn-primary" ng-click="setParams()" loading-button lb-completed="isSuccess">  <span class="glyphicon glyphicon-ok"aria-hidden="true"></span> Confirm</button></center>

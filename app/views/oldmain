@@ -1,0 +1,79 @@
+
+<form class="form-horizontal well">
+    <div class="form-group">
+        <div ng-hide="isAvailableResults()">
+            <div class="row text-center hidden-xs">
+                <img  class="logo"src="images/search-glass.png" alt="Logo" /><br/>
+                <br/>
+            </div>
+        </div>
+        <label id="search-input-label" class="col-sm-3 control-label" ng-bind="translation.SEARCH_LABEL">Searching an RFP</label>
+
+        <div class="input-group" style="width:50%">
+            <input type="text" class="form-control"  placeholder="{{translation.SEARCH_PLACEHOLDER}}" ng-model="searchText"
+            typeahead="album for album in autocomplete($viewValue) | filter:$viewValue" />
+
+
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" ng-click="fullTextSearch(searchText, 1)" ng-bind="translation.SEARCH_BUTTON">MusicBrainz Search</button>
+            </span>
+        </div>
+    </div>
+</form>
+<div ng-show="isAvailableResults()">
+    <div class="row">
+        <div id="result-number" class="col-md-3 table-responsive middle-col middle-col-support">
+            {{searchResp.hits.total}} {{translation.SEARCH_RESULTS}} {{translation.SEARCH_IN}} {{searchResp.took}} {{translation.SEARCH_MS}}
+        </div>
+        <div class="col-xs-6 col-md-3 table-responsive middle-col middle-col-support">
+            <span ng-bind="translation.SEARCH_PAGE_DISPLAY">Display</span>
+            <select ng-model="pageSize" ng-options="c.label for c in pageSizes" ng-change="selectPage(1)"></select>
+        </div>
+        <div class="col-xs-6 col-md-4 table-responsive middle-col-support">
+            <pagination previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+            total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"
+            rotate="false" num-pages="numPages" items-per-page="pageSize.count" on-select-page="selectPage(page)"></pagination>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8 table-responsive">
+            <table class="table table-striped">
+                <tr ng-repeat="hit in searchResp.hits.hits">
+                    <td>
+                        <cover album-id="hit._source.id"></cover>
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                        <a href="http://musicbrainz.org/release-group/">
+                            <strong>{{hit.fields.filename[0]}}</strong></a>
+
+                            <div align="right">
+                               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                               <a href="http://musicbrainz.org/artist/">
+                                <strong>{{hit.fields.author[0]}}</strong>
+                            </div>
+                        </a><br />
+
+                        <div ng-repeat="inner in hit.inner_hits.couple.hits.hits">
+                            <div ng-repeat="question in inner.highlight.question">
+
+                                <div ng-bind-html="question"></div>
+                            </div>
+                            <div ng-repeat="response in inner.highlight.response">
+
+                                <div ng-bind-html="response"></div>
+                            </div></div>
+
+                        </td>
+                    </tr>
+                </table>
+                <pager total-items="totalItems" page="currentPage" on-select-page="selectPage(page)"></pager>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+

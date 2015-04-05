@@ -1,0 +1,16 @@
+<div ng-show="isAvailableResults()">
+<div class="row">
+  <div class="col-xs-1 col-md-3" ng-repeat="hit in searchResp.hits.hits">
+
+    <a  class="thumbnail" href ng-click="setId(hit._id)">
+   
+      <img src="images/XLSX.png" style="min-height:50px;height:100px;" >
+<div class="caption">
+       <center> <h4>{{hit.fields.filename[0]}}</h4></center>
+    </div></a>
+</div>
+</div>
+</div>
+<div ng-hide="isAvailableResults()">
+	<h1> There is no Rfp to proceed !<h1/>
+</div>
