@@ -167,8 +167,25 @@ module.exports = function (grunt) {
       },
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath:  /\.\.\// ,
+          fileTypes: {
+      html: {
+        replace: {
+          js: function(filePath) {
+            var baseURLEndPos = filePath.lastIndexOf('/');
+            var extPos = filePath.indexOf('.');
+            var libName = filePath.substring(baseURLEndPos + 1, extPos);
+            if (libName === 'elasticsearch') {
+              var newFile = filePath.substring(0, extPos) + '.angular.' + filePath.substring(extPos + 1);
+              return '<script src="' + newFile + '"></script>';
+            }
+            return '<script src="' + filePath + '"></script>';
+          }
+        }
       }
+    }
+      }
+
     },
 
     // Renames files for browser caching purposes
