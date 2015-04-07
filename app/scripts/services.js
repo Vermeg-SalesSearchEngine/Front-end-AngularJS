@@ -50,18 +50,25 @@ angular.module('elasticSearchAngularApp.services', ['ngResource'])
                         "path": "couple",
                         "query": {
                             "bool": {
-                                "must": [
+                                "should": [
                                     {
-                                        "fuzzy_like_this": {
-                                            "fields": [
-                                                "couple.question",
-                                                "couple.response"
-                                            ],
-                                            "like_text": text,
-                                            "min_similarity": 0.7,
-                                            "prefix_length": 1
+                                        "multi_match": {
+                                            "fields":["couple.question","couple.response"] ,
+                                                "query": text,
+                                                "slop": 50,
+                                                "type": "phrase"
+                                            }
                                         }
-                                    }
+                                    
+                                ],
+                                "must": [
+{
+                                        "multi_match": {
+                                            "fields":["couple.question","couple.response"] ,
+                                                "query": text,
+                                                  "minimum_should_match": "50%"
+                                            }
+                                        }
                                 ]
                             }
                         },

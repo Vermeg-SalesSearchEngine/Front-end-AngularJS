@@ -58,24 +58,10 @@ download='test.xlsx'>download</a>
                             </div>
                         </a><br />
 
-                        <div ng-repeat="inner in hit.inner_hits.couple.hits.hits">
-                            <div ng-repeat="question in inner.highlight.question">
-                           
 
-                                <div ng-bind-html="question"></div>
-                            </div>
-                            <div ng-repeat="response in inner.highlight.response">
-                              
-
-                                <div ng-bind-html="response"></div>
-                            </div></div>
-
-<div align="right">
-<button type="button" class="btn btn-default btn-sm" ng-click="showDetails = ! showDetails">
-  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Questions/Responses
-</button></div>                            <div ng-repeat="inner in hit.inner_hits.couple.hits.hits" ng-show="! showDetails">
-                        <strong>Question:</strong> <br><p class="bg-info">{{inner._source.question}}</p><br>
-                         <strong>Response:</strong><br><p class="bg-success">{{inner._source.response}}</p><br>
+                           <div ng-repeat="inner in hit.inner_hits.couple.hits.hits" ng-show="! showDetails">
+                        <strong>Question:</strong> <br><p >{{inner._source.question}}</p><br>
+                         <strong>Response:</strong><br><p >{{inner._source.response}}</p><br>
                          <hr>
                      </div>
 
