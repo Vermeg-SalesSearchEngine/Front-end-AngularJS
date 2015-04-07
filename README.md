@@ -13,7 +13,7 @@ This project provide a search engine front for sales service .It depends on Elas
 Clone this repo and run the content locally:
 ```bash
 $ npm install
-$ frunt serve
+$ grunt serve
 ```
 - `npm install` will install the required node libraries under `node_modules` and then call `bower install` which will install the required client-side libraries under `bower_components`.
 - `gulp serve-dev` will serve up the Angular application in a browser window. It is designed for an efficient development process. As you make changes to the code, the browser will update to reflect the changes immediately.
