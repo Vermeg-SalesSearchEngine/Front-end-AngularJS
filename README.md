@@ -1,5 +1,5 @@
 # Front-end Angular
-This project provide a search engine front for sales service .It depends on Elasticsearch server and converter Rest service.
+This project provide a search engine front for sales service .It depends on Elasticsearch server and [converter Rest service] (https://github.com/Vermeg-SalesSearchEngine/MicroService-converter).
 
 ## Requirements
 
@@ -8,7 +8,19 @@ This project provide a search engine front for sales service .It depends on Elas
     - on Windows, use the installer available at [nodejs.org](http://nodejs.org/)
 - Open terminal
 - Type `npm install --global  bower grunt-cli`
-
+- 
+##Config
+In order to support data binding in handsonTable you need to edit bower_components\nghandsontable\dist\ngHandsontable.js
+Add thos 3 lines after line 267
+ ```                      
+   function () {
+++   //for binding scope.data to handstontable
+++   scope.htSettings['data'] = scope.datarows;
+++     settingFactory.updateHandsontableSettings(scope.hotInstance, scope.htSettings);
+                            settingFactory.renderHandsontable(scope.hotInstance);
+                        }
+                    );
+```
 ## Quick Start
 Clone this repo and run the content locally:
 ```bash
