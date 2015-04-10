@@ -1,7 +1,7 @@
 'use strict';
 
 /* Services */
-angular.module('elasticSearchAngularApp.services', ['ngResource'])
+angular.module('elasticSearchAngularApp.services', ['ngResource','oitozero.ngSweetAlert'])
     .value('version', '1.0')
     .directive('fileModel', ['$parse', function ($parse) {
     return {
@@ -17,6 +17,33 @@ angular.module('elasticSearchAngularApp.services', ['ngResource'])
             });
         }
     };
+}]).config(['$httpProvider' ,function ($httpProvider) {
+    $httpProvider.interceptors.push(function ($q,$injector) {
+        return {
+            'response': function (response) {
+                //Will only be called for HTTP up to 300
+                //console.log(response);
+                return response;
+            },
+            'responseError': function (rejection) {
+                var myService= $injector.get("SweetAlert");
+                if(rejection.status===0)
+                {
+                myService.swal("Error", "Can't find service !", "error");
+                
+           }else{
+             if(rejection.status===500)
+                {
+                myService.swal("Error", " Internal server 500 !", "error");
+                
+           }
+           }
+
+
+                return $q.reject(rejection);
+            }
+        };
+    });
 }]).factory('Data', function () {
     return { Id: '' };
 })

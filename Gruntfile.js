@@ -168,7 +168,7 @@ module.exports = function (grunt) {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\// ,
-          fileTypes: {
+  /*        fileTypes: {
       html: {
         replace: {
           js: function(filePath) {
@@ -183,7 +183,7 @@ module.exports = function (grunt) {
           }
         }
       }
-    }
+    }*/
       }
 
     },
