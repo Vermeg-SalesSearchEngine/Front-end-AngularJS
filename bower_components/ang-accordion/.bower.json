@@ -1,0 +1,24 @@
+{
+  "name": "angular-accordion",
+  "homepage": "https://github.com/sherwaniusman/angular-accordion",
+  "authors": [
+    "Muhammad Usman <uxman.sherwani@gmail.com"
+  ],
+  "description": "A simple angular directive for adding accordion UI element",
+  "main": "js/ang-accordion.js",
+  "keywords": [
+    "angular",
+    "accordion"
+  ],
+  "license": "MIT",
+  "_release": "efee841f01",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "efee841f01761c7d404bd3353c15775491faf61b"
+  },
+  "_source": "git://github.com/sherwaniusman/angular-accordion.git",
+  "_target": "*",
+  "_originalSource": "ang-accordion",
+  "_direct": true
+}
