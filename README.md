@@ -12,21 +12,9 @@ This project provide a search engine front for sales service .It depends on Elas
 Clone this repo and run the content locally:
 ```bash
 $ npm install
-$ bower install
 ```
 `npm install` will install the required node libraries under `node_modules` and then call `bower install` which will install the required client-side libraries under `bower_components`.
-## Config
-In order to support data binding in handsonTable you need to edit bower_components\nghandsontable\dist\ngHandsontable.js
-Add thos 3 lines after line 267
- ```                      
-   function () {
-++   //for binding scope.data to handstontable
-++   scope.htSettings['data'] = scope.datarows;
-++     settingFactory.updateHandsontableSettings(scope.hotInstance, scope.htSettings);
-                            settingFactory.renderHandsontable(scope.hotInstance);
-                        }
-                    );
-```
+
 ## Run:
 Clone this repo and run the content locally:
 ```bash
