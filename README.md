@@ -7,7 +7,8 @@ This project provide a search engine front for sales service .It depends on Elas
     - on OSX, install [home brew](http://brew.sh/) and type `brew install node`
     - on Windows, use the installer available at [nodejs.org](http://nodejs.org/)
 - Open terminal
-- Type `npm install --global  bower grunt-cli`
+Type `npm install --global  bower grunt-cli`
+
 ## Quick Start
 Clone this repo and run the content locally:
 ```bash
