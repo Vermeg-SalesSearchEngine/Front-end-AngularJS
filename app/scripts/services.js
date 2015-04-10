@@ -18,7 +18,7 @@ angular.module('elasticSearchAngularApp.services', ['ngResource','oitozero.ngSwe
         }
     };
 }]).config(['$httpProvider' ,function ($httpProvider) {
-    $httpProvider.interceptors.push(function ($q,$injector) {
+    $httpProvider.interceptors.push(function ($q,$injector,$rootScope,$window) {
         return {
             'response': function (response) {
                 //Will only be called for HTTP up to 300
@@ -30,14 +30,26 @@ angular.module('elasticSearchAngularApp.services', ['ngResource','oitozero.ngSwe
                 if(rejection.status===0)
                 {
                 myService.swal("Error", "Can't find service !", "error");
+                $rootScope.stopSpin();
                 
-           }else{
-             if(rejection.status===500)
+           }else if(rejection.status===500)
                 {
                 myService.swal("Error", " Internal server 500 !", "error");
+                $rootScope.stopSpin();
+                $window.location='/#/';
+                
+           }
+           
+           else{
+             if(rejection.status===404)
+                {
+                myService.swal("Error", " Not found!", "error");
+                $rootScope.stopSpin();
+                 $window.location='/#/import';
                 
            }
            }
+          
 
 
                 return $q.reject(rejection);

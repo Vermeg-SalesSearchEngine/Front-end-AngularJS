@@ -8,7 +8,7 @@
  * Controller of the elasticSearchAngularApp
  */
  angular.module('elasticSearchAngularApp')
- .controller('AboutCtrl', ['$scope','fileUpload','$rootScope','usSpinnerService','searchService','dialogs','getSheets','SweetAlert','Data','$window','$routeParams', function($scope,fileUpload,$rootScope,usSpinnerService,searchService,dialogs,getSheets,SweetAlert,Data,$window,$routeParams){
+ .controller('AboutCtrl', ['$scope','fileUpload','$rootScope','usSpinnerService','searchService','dialogs','getSheets','SweetAlert','Data','$window','$routeParams','$log','$document', function($scope,fileUpload,$rootScope,usSpinnerService,searchService,dialogs,getSheets,SweetAlert,Data,$window,$routeParams,$log,$document){
 $scope.showz=true;
 $scope.Data=Data;
 $scope.Data.Id=$routeParams.id;
@@ -24,6 +24,24 @@ $scope.options=res._source.sheets;
           
           
         }
+
+            var pathsArr    = new Array();
+              var lengthsArr  = new Array();
+
+              angular.forEach($document[0].querySelectorAll('path'), function(path, i) {
+                pathsArr[i] = path;
+                path.style.strokeDasharray = lengthsArr[i] = path.getTotalLength();
+              });
+
+              var draw = function(val) {
+                for (var i = 0, len = pathsArr.length; i < len; ++i){
+                  pathsArr[i].style.strokeDashoffset = lengthsArr[i] * (1 - val);
+                }
+              }
+
+              $scope.$watch('loaded', function(v) {
+                draw(v);
+              });
 /*if (Data.Id=='')
 {alert('aaa');
 
@@ -55,14 +73,14 @@ $scope.uploadFile = function(){
         return;}
 
         
-        $scope.startSpin();
+        $rootScope.startSpin();
         if($scope.showz==false)
         {
            fileUpload.uploadFileToUrl($scope.base64,name,uploadUrl2).then(function(dataSheet) {
           $scope.sheet=dataSheet.rows;
           $scope.nbrcolumns=dataSheet.rows[0].length;
           $scope.show=true;
-          $scope.stopSpin();
+          $rootScope.stopSpin();
           
         });
 
@@ -73,7 +91,7 @@ $scope.uploadFile = function(){
           $scope.sheet=dataSheet.rows;
           $scope.nbrcolumns=dataSheet.rows[0].length;
           $scope.show=true;
-          $scope.stopSpin();
+          $rootScope.stopSpin();
           
         });}
         $scope.sheet=[];
@@ -92,12 +110,12 @@ $scope.uploadFile = function(){
           SweetAlert.swal("Error", "File already exists :)", "error");
           return;
         }
-        $scope.startSpin();
+        $rootScope.startSpin();
         var uploadUrl = "http://localhost:7000/convert/getSheets/";
         getSheets.uploadFileToUrl(file, uploadUrl).then(function(dataSheet) {
           $scope.options=dataSheet;
           $scope.show=true;
-          $scope.stopSpin();
+          $rootScope.stopSpin();
           
         })})};
 
@@ -105,10 +123,10 @@ $scope.uploadFile = function(){
         
 
         
-        $scope.startSpin = function(){
+        $rootScope.startSpin = function(){
           usSpinnerService.spin('spinner-1');
         }
-        $scope.stopSpin = function(){
+        $rootScope.stopSpin = function(){
           usSpinnerService.stop('spinner-1');
         }
         $scope.onSelection= function(row, col, row2, col2){
@@ -146,8 +164,8 @@ $scope.uploadFile = function(){
           dlg.result.then(function(btn){
            
             
-            $scope.startSpin();
-            setTimeout(function(){ $scope.stopSpin(); }, 1000);
+            $rootScope.startSpin();
+            setTimeout(function(){ $rootScope.stopSpin(); }, 1000);
             for (var i =0; i < $scope.nbrcolumns; i++) {
               $scope.headers[i]='-';
             }
@@ -192,8 +210,8 @@ $scope.uploadFile = function(){
             var dlg = dialogs.confirm('Please Confirm','Select this column as Response s column?');
             dlg.result.then(function(btn){
              
-              $scope.startSpin();
-              setTimeout(function(){ $scope.stopSpin(); }, 1000);
+              $rootScope.startSpin();
+              setTimeout(function(){ $rootScope.stopSpin(); }, 1000);
               $scope.headers[col]='Responses';   
               parent.updateSettings({
                 colHeaders: $scope.headers
@@ -253,12 +271,18 @@ $scope.setParams=function()
   {
   for (var i =0; i < $scope.questions.length; i++) {
     var paire={};
+    if($scope.questions[i]!=null && $scope.responses[i]!=null )
+    {
     paire.question=$scope.questions[i];
     paire.response=$scope.responses[i];
-    $scope.document.couple.push(paire);}
+    $scope.document.couple.push(paire);}}
     console.log($scope.document.couple);
       var index = $scope.options.indexOf($scope.myselect);
   $scope.options.splice(index, 1);
+    if($scope.document.couple.length==0)
+          {SweetAlert.swal("Ucomplete form", "You have not selected question/responses!", "error");
+        $scope.completed = false;
+        return;}
 searchService.update($scope.Data.Id,$scope.document.couple,$scope.options).then(function (res) {
   $scope.isSuccess = true;
   if ($scope.options.length==0)
@@ -266,20 +290,33 @@ searchService.update($scope.Data.Id,$scope.document.couple,$scope.options).then(
 SweetAlert.swal("Good job", "RFP idexed successfully !", "success");
 $window.location='/#/import';
 Data.Id='';
+ $scope.completed = true;
 }
 else
 {SweetAlert.swal("Good job", "Please complete indexing other sheets", "success");
   $window.location='/#/importrfp';
+   $scope.completed = true;
 }
 
 });
 }
+
+
+
+
   else
   {
-  
-  $scope.document.file=$scope.filebase.base64;
-  $scope.document.filename=$scope.myFile.name;
-  $scope.document.filedate=$scope.myFile.lastModifiedDate;
+   $scope.document.file=null;
+    if (typeof $scope.filebase != "undefined")
+       {  $scope.document.file=$scope.filebase.base64;
+         $scope.document.filename=$scope.myFile.name;
+  $scope.document.filedate=$scope.myFile.lastModifiedDate;}
+  if($scope.document.file==null)
+          {SweetAlert.swal("Ucomplete form", "Please complete all fields!", "error");
+        $scope.completed = false;
+        return;}
+  //$scope.document.file=$scope.filebase.base64;
+
   $scope.document.tags=[];
   $scope.document.author=$scope.author;
   //$scope.document.questions=$scope.questions;
@@ -289,32 +326,49 @@ else
    
    for (var i =0; i < $scope.questions.length; i++) {
     var paire={};
+    if($scope.questions[i]!=null && $scope.responses[i]!=null )
+    {
     paire.question=$scope.questions[i];
     paire.response=$scope.responses[i];
-    $scope.document.couple.push(paire);}
+    $scope.document.couple.push(paire);}}
     console.log(JSON.stringify($scope.document));
     var index = $scope.options.indexOf($scope.myselect);
   $scope.options.splice(index, 1);
   $scope.document.sheets=$scope.options;
+        if($scope.document.couple.lenght==0)
+          {SweetAlert.swal("Ucomplete form", "You have not selected question/responses!", "error");
+        $scope.completed = false;
+        return;}
     if($scope.options.length==0)
     {
 $scope.document.complete=true;
     }
     else
       {$scope.document.complete=false;}
+        if($scope.document.author==null )
+          {SweetAlert.swal("Ucomplete form", "Please complete all fields!", "error");
+        $scope.completed = false;
+        return;}
+
+      
+
     searchService.index($scope.document).then(function (res) {
       $scope.isSuccess = true;
+      
   if ($scope.options.length==0)
   {
+    $scope.completed = true;
 SweetAlert.swal("Good job", "RFP idexed successfully !", "success");
 //
-Data.Id='';
+Data.Id=''; $scope.completed = true;
 $window.location='/#/import';
+
 }
 else
 {  Data.Id=res._id;
   console.log(Data.Id);
   //$window.location.reload();
+  $scope.completed = true;
   SweetAlert.swal("Good job", "Please complete indexing other sheets", "success");
   //
  
